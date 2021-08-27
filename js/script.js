@@ -47,5 +47,57 @@ Design.addEventListener('change', () =>{
 });
 // "Color" dropdown menu should display only the color options associated with the selected design.
 
+const activities = document.getElementById('activities');
+const totalcost = document.getElementById("activities-cost");
+let cost = 0;
 
+activities.addEventListener('change', (e) =>{
+    const datacost = +e.target.getAttribute('data-cost');
+    if(e.target.checked){
+      cost += datacost
+    }else if(e.target.checked === false){
+      cost -= datacost
+    }
+
+  totalcost.textContent = `Total:$${cost}`;
+
+});
+//"Register for Activities" fieldset element to listen for user changes.
+//The credit card payment option should be selected for the user by default.
+const Payment = document.getElementById('payment');
+const  Creditcardinfo = document.getElementById('credit-card');
+const Creditcardselected = Payment.querySelector('option[value="credit-card"]');
+Creditcardselected.selected = 'true';
+//Payment.children[1].setAttribute('selected','selected')
+//Hide paypal and bitcoin payment options default.
+const Paypal = document.querySelector('#paypal');
+const Bitcoin = document.querySelector('#bitcoin');
+Paypal.hidden = true;
+Bitcoin.hidden = true;
+//when the user selects one of the payment options from  drop down menu,only the chosen payment method section will display.
+Payment.addEventListener('change',(e) =>{
+    const Selectedpayment = e.target.value
+    if(Selectedpayment === 'bitcoin'){
+        Bitcoin.style.display = 'block';
+        Paypal.style.display = 'none';
+        Creditcardinfo.style.display = 'none';
+   }else if(Selectedpayment === 'paypal'){
+        Bitcoin.style.display = 'none';
+        Paypal.style.display = 'block';
+        Creditcardinfo.style.display = 'none';
+   }else if(Selectedpayment === 'credit-card'){
+        Bitcoin.style.display = 'none';
+        Paypal.style.display = 'none';
+        Creditcardinfo.style.display = 'block';
+   }
+});
+//form validation
+
+
+
+
+
+
+
+ 
 
