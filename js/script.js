@@ -1,6 +1,5 @@
 //When the page first loads, the first text field should have the focus state by default
-const nameinput = document.getElementById('name');
-nameinput.focus();
+document.getElementById('name').focus();
 //"Other job role" text field should be hidden by default and only displayed once users select "Other", and be hidden if the user selects any other option.
 const JobRole = document.getElementById('title');
 const otherjob = document.getElementById('other-job-role');
@@ -92,6 +91,143 @@ Payment.addEventListener('change',(e) =>{
    }
 });
 //form validation
+const form = document.querySelector('form');
+const email = document.getElementById('email');
+const nameinput = document.getElementById('name');
+const cardnumber = document.getElementById('cc-num');
+const zipcode = document.getElementById('zip');
+const cvv = document.getElementById('cvv');
+//using functions to test inputs validation.
+function namevalid(){
+    const NameRegex = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameinput.value);
+    const Namehit = document.getElementById('name-hint');
+    if(NameRegex == false ){
+        nameinput.parentElement.className = 'not-valid'
+        Namehit.style.display = 'contents'
+    }else if(NameRegex == true){
+        nameinput.parentElement.removeAttribute('class','not-valid')
+        Namehit.style.display = 'none'
+        nameinput.parentElement.className = 'valid'
+    }
+    return NameRegex
+}
+function emailvalid(){
+   const EmailRegex = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email.value);
+   const Emailhit = document.getElementById('email-hint');
+   if(EmailRegex == false){
+        email.parentElement.className = 'not-valid'
+        Emailhit.style.display = 'contents'
+   }else if (EmailRegex == true){
+        email.parentElement.removeAttribute('class', 'not-valid')
+        Emailhit.style.display = 'none';
+        email.parentElement.className = 'valid'
+   }
+   return EmailRegex
+}
+//use totalcost as condition to detect if user select any item from activities field.
+
+function activitiesvalid(){
+    const activitiehit = document.getElementById('activities-hint')
+    if(cost !== 0){
+        activities.classList.add('valid');
+        activitiehit.style.display = 'none' 
+        return true
+    }else {
+        activities.classList.add('not-valid')
+        activitiehit.style.display = 'contents'
+        
+    }
+        
+}//activities validation not working for now.Need fix
+function cardnumbervalid(){
+   const CardnumberRegex = /^\d{13,16}$/.test(cardnumber.value);
+   const Cchit = document.getElementById('cc-hint');
+   if(CardnumberRegex == false){
+        cardnumber.parentElement.className = 'not-valid'
+        Cchit.style.display = 'contents'
+   }else if(CardnumberRegex == true){
+        cardnumber.parentElement.removeAttribute('class', 'not-valid')
+        Cchit.style.display = 'none'
+        cardnumber.parentElement.className = 'valid'
+
+   }
+   return CardnumberRegex
+}
+function zipcodevalid(){
+   const ZipcodeRegex = /^\d{5}$/.test(zipcode.value);
+   const Ziphit = document.getElementById('zip-hint');
+   if(ZipcodeRegex == false){
+        zipcode.parentElement.className = 'not-valid'
+        Ziphit.style.display = 'contents'
+   }else if(ZipcodeRegex == true){
+        zipcode.parentElement.removeAttribute('class', 'not-valid')
+        Ziphit.style.display = 'none'
+        zipcode.parentElement.className = 'valid'
+   }
+   return ZipcodeRegex
+}
+function cvvvalid(){
+   const CvvRegex = /^\d{3}$/.test(cvv.value);
+   const Cvvhit = document.getElementById('cvv-hint');
+   if(CvvRegex == false){
+        cvv.parentElement.className = 'not-valid'
+        Cvvhit.style.display = 'contents'
+   }else if(CvvRegex == true){
+        cvv.parentElement.removeAttribute('class', 'not-valid')
+        Cvvhit.style.display = 'none'
+        cvv.parentElement.className = 'valid'
+   }
+   return CvvRegex
+}
+function paymentvalid(){
+    
+    if(Payment.value === 'credit-card'){
+       Payment.parentElement.classList.remove('not-valid');
+       if(cardnumbervalid() && zipcodevalid() && cvvvalid()){
+           return true
+       }else{
+           cardnumbervalid()
+           zipcodevalid()
+           cvvvalid()
+           return false
+       }
+  }
+
+}
+//Add the ‘.not-valid’ and '.valid' className to the parent element of the form .
+//Hide the .hint element, if valid.
+
+//listen for submit event.
+//console message will show up once user submit their application.
+form.addEventListener('submit', (e) =>{
+    if ( namevalid() && emailvalid() && activitiesvalid() && paymentvalid()) {
+        console.log('form submited')
+    } else {
+        e.preventDefault()
+        namevalid()
+        emailvalid()
+        activitiesvalid()
+        paymentvalid()
+        console.error('Incorrect inputs , please check the form validation. ')
+    }
+})
+//Accessibility setup.
+//Make the form validation errors obvious to all users. 
+
+let activitiescheckcox = document.querySelectorAll('input[type="checkbox"]');
+
+for (let i = 0; i < activitiescheckcox.length; i++) {
+    activitiescheckcox[i].addEventListener('focus', (e) => {
+     e.target.parentElement.className = 'focus';
+    });
+
+    activitiescheckcox[i].addEventListener('blur', (e) => {
+        e.target.parentElement.classList.remove('focus');
+    });
+};   
+
+
+
 
 
 
