@@ -11,7 +11,7 @@ In the "Register for Activities" section,
 If an activity is checked, the total cost should increase by the value,
 If an activity is unchecked, the total cost should decrease by that amount.
 
-In the "Payment Info" section, when the form first loads, "Credit Card" should be displayed,and the credit card payment section should be the only payment section displayed in the form’s UI.
+In the "Payment Info" section, when the form first loads, "Credit Card" will be displayed,and the credit card payment section will be the only payment section displayed in the form’s UI.
 If user select other payment type, the credit card info section will hide and the related section will display.
 
 "Form validation" and "Accessibility" applied to the last section, user infomation including Name info, Email address and user has to check at least one checkbox of  "Register for Activities".
