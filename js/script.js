@@ -27,7 +27,7 @@ Design.addEventListener('change', (e) =>{
        Designoptions[i].hidden = true;
    }
   //The hidden attribute can prevent option elements from being displayed in the drop down menu.  
-        if(Designselected.value === 'js puns'){
+        if(Designselected.value ==='js puns'){
             Designoptions = Color.querySelectorAll('[data-theme="js puns"]')
             Designoptions[0].selected = true
             for(let i = 0; i < Designoptions.length; i++){ 
@@ -36,7 +36,7 @@ Design.addEventListener('change', (e) =>{
 
             
             
-        }else if(Designselected.value === 'heart js') {
+        }else if(Designselected.value ==='heart js') {
             Designoptions = Color.querySelectorAll('[data-theme="heart js"]')
             Designoptions[0].selected = true 
             for(let i = 0; i < Designoptions.length; i++){ 
@@ -211,6 +211,7 @@ form.addEventListener('submit', (e) =>{
     if ( namevalid() && emailvalid() && activitiesvalid() && paymentvalid()) {
         console.log('form submited')
     } else {
+
         e.preventDefault()
         namevalid()
         emailvalid()
