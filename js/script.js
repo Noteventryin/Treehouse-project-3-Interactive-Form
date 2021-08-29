@@ -20,28 +20,29 @@ Color.style.display = 'none';
 //Disable the "Color" <select> element.
 const Design = document.getElementById('design');
 let Designoptions = Color.querySelectorAll('option');
-Design.addEventListener('change', () =>{
-   Color.style.display = 'inline-block'
-  for(let i = 0; i < Designoptions.length; i++){ 
-    Designoptions[i].hidden = true;
-  }        
+Design.addEventListener('change', (e) =>{
+   Color.style.display = 'block';
+   const Designselected = e.target;
+   for(let i = 0; i < Designoptions.length; i++){ 
+       Designoptions[i].hidden = true;
+   }
   //The hidden attribute can prevent option elements from being displayed in the drop down menu.  
-  if(Design.value === 'js puns'){
-    Designoptions = Color.querySelectorAll('[data-theme="js puns"]')
-    Designoptions.ariaSelected = true
-    //The ariaSelected property of the Element interface reflects the value of the aria-selected attribute
+        if(Designselected.value === 'js puns'){
+            Designoptions = Color.querySelectorAll('[data-theme="js puns"]')
+            Designoptions[0].selected = true
+            for(let i = 0; i < Designoptions.length; i++){ 
+                Designoptions[i].hidden = false;
+            }
 
-    for (let i = 0; i < Designoptions.length; i++){
-        Designoptions[i].hidden = false;
-    }
-  }else if(Design.value === 'heart js'){
-    Designoptions = Color.querySelectorAll('[data-theme="heart js"]')
-    Designoptions.ariaSelected = true 
-    
-    for (let i = 0; i < Designoptions.length; i++){
-        Designoptions[i].hidden = false;
-    }
-  }
+            
+            
+        }else if(Designselected.value === 'heart js') {
+            Designoptions = Color.querySelectorAll('[data-theme="heart js"]')
+            Designoptions[0].selected = true 
+            for(let i = 0; i < Designoptions.length; i++){ 
+                Designoptions[i].hidden = false;
+            }
+        }
   
 });
 // "Color" dropdown menu should display only the color options associated with the selected design.
@@ -103,7 +104,7 @@ function namevalid(){
     const Namehit = document.getElementById('name-hint');
     if(NameRegex == false ){
         nameinput.parentElement.className = 'not-valid'
-        Namehit.style.display = 'contents'
+        Namehit.style.display = 'block'
     }else if(NameRegex == true){
         nameinput.parentElement.removeAttribute('class','not-valid')
         Namehit.style.display = 'none'
@@ -116,7 +117,7 @@ function emailvalid(){
    const Emailhit = document.getElementById('email-hint');
    if(EmailRegex == false){
         email.parentElement.className = 'not-valid'
-        Emailhit.style.display = 'contents'
+        Emailhit.style.display = 'block'
    }else if (EmailRegex == true){
         email.parentElement.removeAttribute('class', 'not-valid')
         Emailhit.style.display = 'none';
@@ -127,24 +128,25 @@ function emailvalid(){
 //use totalcost as condition to detect if user select any item from activities field.
 
 function activitiesvalid(){
+    activities.classList.add('not-valid')
     const activitiehit = document.getElementById('activities-hint')
+    activitiehit.style.display = 'block'
     if(cost !== 0){
         activities.classList.add('valid');
         activitiehit.style.display = 'none' 
+        activities.classList.remove('not-valid')
         return true
-    }else {
-        activities.classList.add('not-valid')
-        activitiehit.style.display = 'contents'
-        
     }
         
-}//activities validation not working for now.Need fix
+}//activities validation function return true inside of the if statement.
+//If not return true ,console will print message('Incorrect inputs , please check the form validation. ')
+//and form can not be submitted.
 function cardnumbervalid(){
    const CardnumberRegex = /^\d{13,16}$/.test(cardnumber.value);
    const Cchit = document.getElementById('cc-hint');
    if(CardnumberRegex == false){
         cardnumber.parentElement.className = 'not-valid'
-        Cchit.style.display = 'contents'
+        Cchit.style.display = 'block'
    }else if(CardnumberRegex == true){
         cardnumber.parentElement.removeAttribute('class', 'not-valid')
         Cchit.style.display = 'none'
@@ -158,7 +160,7 @@ function zipcodevalid(){
    const Ziphit = document.getElementById('zip-hint');
    if(ZipcodeRegex == false){
         zipcode.parentElement.className = 'not-valid'
-        Ziphit.style.display = 'contents'
+        Ziphit.style.display = 'block'
    }else if(ZipcodeRegex == true){
         zipcode.parentElement.removeAttribute('class', 'not-valid')
         Ziphit.style.display = 'none'
@@ -171,7 +173,7 @@ function cvvvalid(){
    const Cvvhit = document.getElementById('cvv-hint');
    if(CvvRegex == false){
         cvv.parentElement.className = 'not-valid'
-        Cvvhit.style.display = 'contents'
+        Cvvhit.style.display = 'block'
    }else if(CvvRegex == true){
         cvv.parentElement.removeAttribute('class', 'not-valid')
         Cvvhit.style.display = 'none'
@@ -182,7 +184,7 @@ function cvvvalid(){
 function paymentvalid(){
     
     if(Payment.value === 'credit-card'){
-       Payment.parentElement.classList.remove('not-valid');
+       Payment.parentElement.classList.remove('not-valid')
        if(cardnumbervalid() && zipcodevalid() && cvvvalid()){
            return true
        }else{
@@ -192,6 +194,12 @@ function paymentvalid(){
            return false
        }
   }
+  if (Payment.value === 'select method') { 
+    Payment.parentElement.classList.add('not-valid');
+  } else {
+    Payment.parentElement.classList.remove('not-valid');
+    return true
+}
 
 }
 //Add the ‘.not-valid’ and '.valid' className to the parent element of the form .
@@ -208,7 +216,7 @@ form.addEventListener('submit', (e) =>{
         emailvalid()
         activitiesvalid()
         paymentvalid()
-        console.error('Incorrect inputs , please check the form validation. ')
+        console.log('Incorrect inputs , please check the form validation. ')
     }
 })
 //Accessibility setup.
