@@ -193,13 +193,13 @@ function paymentvalid(){
            cvvvalid()
            return false
        }
-  }
-  if (Payment.value === 'select method') { 
+    }
+    if (Payment.value === 'select method') { 
     Payment.parentElement.classList.add('not-valid');
-  } else {
+    } else {
     Payment.parentElement.classList.remove('not-valid');
     return true
-}
+    }
 
 }
 //Add the ‘.not-valid’ and '.valid' className to the parent element of the form .
