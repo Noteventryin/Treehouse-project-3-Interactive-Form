@@ -1,4 +1,7 @@
 # Treehouse-project 3-Interactive Form
+ Check out this Interactive Form website 
+ https://noteventryin.github.io/Treehouse-project-3-Interactive-Form/
+ 
 When the page first loads, the first text field has the focus state by default to prompt the user. 
 
 In the "Job Role" section, If the user selects "Other" in the "Job Role" drop down menu, they can enter info into the "Other job role" text field. But this field should be hidden by default and only displayed once users select "Other" in the drop down menu, and be hidden if the user selects any other option.
